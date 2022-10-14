@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Marvels Comic Characters</string>
+    <string name="character_s_image">Character\'s Image</string>
+    <string name="this_is_a_sample_text">this is a sample text</string>
+    <string name="book_marked_characters">Bookmarked characters</string>
+    <string name="search_by_name">Search By Name</string>
+    <string name="search">search</string>
+</resources>

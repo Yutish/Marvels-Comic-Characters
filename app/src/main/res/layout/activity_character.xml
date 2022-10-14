@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.Character.CharacterActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/character_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_margin="8dp"
+                android:backgroundTint="@color/cardview_dark_background"
+                android:contentDescription="@string/character_s_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/character_name_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:fontFamily="sans-serif"
+                android:padding="8dp"
+                android:text="@string/this_is_a_sample_text"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/character_image_view"
+                tools:layout_editor_absoluteX="8dp"
+                tools:text="this is a sample text.." />
+
+            <TextView
+                android:id="@+id/character_description_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@color/cardview_dark_background"
+                android:fontFamily="sans-serif"
+                android:padding="8dp"
+                android:text="@string/this_is_a_sample_text"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/character_name_text_view"
+                tools:layout_editor_absoluteX="8dp"
+                tools:text="this is a sample text.." />
+
+            <TextView
+                android:id="@+id/character_comic_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@color/cardview_dark_background"
+                android:fontFamily="sans-serif"
+                android:padding="8dp"
+                android:text="@string/this_is_a_sample_text"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/character_description_text_view"
+                tools:layout_editor_absoluteX="8dp"
+                tools:text="this is a sample text.." />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="128dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
