@@ -5,4 +5,5 @@
     <string name="book_marked_characters">Bookmarked characters</string>
     <string name="search_by_name">Search By Name</string>
     <string name="search">search</string>
+    <string name="bookmarked_character_list">Bookmarked Character List</string>
 </resources>
