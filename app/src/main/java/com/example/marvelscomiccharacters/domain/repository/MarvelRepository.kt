@@ -8,4 +8,6 @@ interface MarvelRepository {
     suspend fun getAllCharacters(offset: Int): List<CharacterModel>
     suspend fun getAllSearchedCharacters(search: String): CharactersDTO
     suspend fun getCharacterById(id: String): List<CharacterModel>
+    suspend fun getAllBookmarkedCharacters(): List<CharacterModel>
+    suspend fun setBookmarkData(characterModel: CharacterModel)
 }

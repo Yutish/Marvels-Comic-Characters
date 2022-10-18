@@ -9,17 +9,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.marvelscomiccharacters.R
 import com.example.marvelscomiccharacters.domain.model.CharacterModel
 import com.example.marvelscomiccharacters.ui.Character.CharacterActivity
+import com.example.marvelscomiccharacters.ui.CharactersList.CharactersViewModel
 import java.util.*
 
 /**
  * [CharacterListAdapter] sets the viewholder for MainActivity's recyclerview to hold data.
  */
-class CharacterListAdapter(private val context: Context, var itemList: ArrayList<CharacterModel>) :
+class CharacterListAdapter(private val context: Context, var itemList: ArrayList<CharacterModel>, var viewModel: CharactersViewModel) :
     RecyclerView.Adapter<
             CharacterListAdapter.CharacterListViewHolder>() {
     inner class CharacterListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -46,6 +48,13 @@ class CharacterListAdapter(private val context: Context, var itemList: ArrayList
             intent.putExtra("id", list.id)
             context.startActivity(intent)
         }
+
+        holder.cardCharacter.setOnLongClickListener{
+            Toast.makeText(context, "Character Bookmarked!", Toast.LENGTH_LONG)
+                .show()
+            viewModel.setBookmarkValues(list)
+            return@setOnLongClickListener true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -55,6 +64,12 @@ class CharacterListAdapter(private val context: Context, var itemList: ArrayList
     @SuppressLint("NotifyDataSetChanged")
     fun setData(characterList: ArrayList<CharacterModel>) {
         this.itemList.addAll(characterList)
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun clear() {
+        this.itemList.clear()
         notifyDataSetChanged()
     }
 }

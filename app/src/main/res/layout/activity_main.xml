@@ -44,5 +44,15 @@
             android:padding="164dp"
             android:visibility="gone" />
 
+        <ImageButton
+            android:id="@+id/bookmarked_list_button"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_input_get"
+            android:contentDescription="@string/bookmarked_character_list" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

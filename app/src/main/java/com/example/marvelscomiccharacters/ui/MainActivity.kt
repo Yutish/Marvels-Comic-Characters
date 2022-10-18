@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +23,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
- * Entry point, [MainActivity] handles the recyeclerview implementation.
+ * Entry point, [MainActivity] handles the recyclerview implementation.
  */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     private lateinit var adapter: CharacterListAdapter
     private lateinit var layoutManager: GridLayoutManager
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var imageButton: ImageButton
 
     private val viewModel: CharactersViewModel by viewModels()
     var list = arrayListOf<CharacterModel>()
@@ -71,6 +73,33 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
             }
         })
 
+        imageButton = binding.bookmarkedListButton
+        imageButton.setOnClickListener {
+            bookmark()
+        }
+
+    }
+
+    private fun bookmark() {
+        viewModel.getBookmarkedCharacterData()
+        CoroutineScope(Dispatchers.Main).launch {
+            viewModel.marvelValue.collect {
+                when {
+                    it.isLoading -> {
+                        binding.progressCircular.visibility = View.VISIBLE
+                    }
+                    it.error.isNotBlank() -> {
+                        binding.progressCircular.visibility = View.GONE
+                        Toast.makeText(this@MainActivity, it.error, Toast.LENGTH_LONG).show()
+                    }
+                    it.charactersList.isNotEmpty() -> {
+                        binding.progressCircular.visibility = View.GONE
+                        adapter.clear()
+                        adapter.setData(it.charactersList as ArrayList<CharacterModel>)
+                    }
+                }
+            }
+        }
     }
 
     private fun callAPI() {
@@ -110,7 +139,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     @SuppressLint("NotifyDataSetChanged")
     private fun recyclerViewCharacters() {
         recyclerView = binding.characterRecyclerView
-        adapter = CharacterListAdapter(this, ArrayList())
+        adapter = CharacterListAdapter(this, ArrayList(), viewModel)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
     }
@@ -154,6 +183,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
                     }
                     it.charactersList.isNotEmpty() -> {
                         binding.progressCircular.visibility = View.GONE
+                        adapter.clear()
                         adapter.setData(it.charactersList as ArrayList<CharacterModel>)
                     }
                 }

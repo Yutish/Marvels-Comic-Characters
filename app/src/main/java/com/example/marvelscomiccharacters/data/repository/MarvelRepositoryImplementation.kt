@@ -7,9 +7,7 @@ import android.os.Build
 import com.example.marvelscomiccharacters.MarvelApplication
 import com.example.marvelscomiccharacters.data.data_source.dto.CharactersDTO.CharactersDTO
 import com.example.marvelscomiccharacters.data.data_source.dto.MarvelApi
-import com.example.marvelscomiccharacters.database.DatabaseCharacter
-import com.example.marvelscomiccharacters.database.asDomainModel
-import com.example.marvelscomiccharacters.database.getDatabase
+import com.example.marvelscomiccharacters.database.*
 import com.example.marvelscomiccharacters.domain.model.CharacterModel
 import com.example.marvelscomiccharacters.domain.repository.MarvelRepository
 import kotlinx.coroutines.Dispatchers
@@ -74,6 +72,23 @@ class MarvelRepositoryImplementation @Inject constructor(
 
     }
 
+    override suspend fun getAllBookmarkedCharacters(): List<CharacterModel> {
+        return withContext(Dispatchers.IO) {
+            (getDatabase(MarvelApplication.instance).characterDao.getAllBookmarkedCharacters()
+                .asBookmarkedDomainModel())
+        }
+    }
+
+
+    override suspend fun setBookmarkData(characterModel: CharacterModel) {
+        return withContext(Dispatchers.IO) {
+            getDatabase(MarvelApplication.instance).characterDao.insertBookmark(
+                toBookmarkedCharacter(characterModel)
+            )
+        }
+
+    }
+
     private suspend fun populateDatabase(list: List<CharacterModel>) {
         withContext(Dispatchers.IO) {
             for (item in list) {
@@ -84,6 +99,16 @@ class MarvelRepositoryImplementation @Inject constructor(
 
     private fun toDatabaseModel(item: CharacterModel): DatabaseCharacter {
         return DatabaseCharacter(
+            id = item.id,
+            name = item.name,
+            description = item.description,
+            thumbnail = item.thumbnail,
+            thumbnailExt = item.thumbnailExt,
+        )
+    }
+
+    private fun toBookmarkedCharacter(item: CharacterModel): BookmarkedCharacter {
+        return BookmarkedCharacter(
             id = item.id,
             name = item.name,
             description = item.description,

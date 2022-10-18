@@ -13,9 +13,15 @@ interface CharacterDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg characters: DatabaseCharacter)
+
+    @Query("select * from BookmarkedCharacter")
+    fun getAllBookmarkedCharacters(): List<BookmarkedCharacter>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertBookmark(vararg characters: BookmarkedCharacter)
 }
 
-@Database(entities = [DatabaseCharacter::class], version = 1)
+@Database(entities = [DatabaseCharacter::class, BookmarkedCharacter::class], version = 1)
 abstract class CharactersDatabase : RoomDatabase() {
     abstract val characterDao: CharacterDao
 }
