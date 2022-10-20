@@ -51,6 +51,7 @@
             android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="@color/black"
             app:srcCompat="@android:drawable/ic_input_get"
             android:contentDescription="@string/bookmarked_character_list" />
 
